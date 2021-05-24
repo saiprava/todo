@@ -1,0 +1,5 @@
+export const TaskActions = {
+    SET_TASK_DESCRIPTION : 'SET_TASK_DESCRIPTION',
+    SET_TASK_STATUS : 'SET_TASK_STATUS',
+    SET_DATE : 'SET_DATE'
+}
