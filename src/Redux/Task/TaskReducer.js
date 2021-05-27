@@ -2,28 +2,18 @@
 import {TaskActions} from './Task.types';
 
 const INITIAL_STATE = {
-    taskdescription : null,
-    taskstatus : false,
-    taskcomplete: null
+   task : []
 }
 
 const TaskReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case TaskActions.SET_TASK_DESCRIPTION :
+        case TaskActions.SET_TASK:
             return {
                 ...state,
-                taskdescription : action.payload
+                task : [...state.task,action.payload]
             }
-        case TaskActions.SET_TASK_STATUS :
-            return {
-                ...state,
-                taskstatus : action.payload
-            }    
-        case TaskActions.SET_DATE :
-            return {
-                ...state,
-                taskcomplete : action.payload
-            }    
+        default:
+            return state;
     }
 }
 
