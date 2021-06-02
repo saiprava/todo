@@ -2,7 +2,7 @@
 import {TaskActions} from './Task.types';
 
 const INITIAL_STATE = {
-   task : [],
+   task : null,
    taskDeleted: [],
    taskCompleted: []
 }
@@ -12,7 +12,7 @@ const TaskReducer = (state = INITIAL_STATE, action) => {
         case TaskActions.SET_TASK:
             return {
                 ...state,
-                task : [...state.task,action.payload]
+                task : action.payload
             }
         case TaskActions.SET_TASK_DELETED:
             let items= state.task.filter(a => a.title!==action.payload)

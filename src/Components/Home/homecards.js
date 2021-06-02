@@ -3,8 +3,8 @@ import { Button, Text,Card ,CardHeader,CardBody, CardFooter} from '@innovaccer/d
  
 const Homecards = (props) =>{
     return(
-    <Card className="w-50 mt-9" style={{
-        height: '200px'
+    <Card className="p-7 mt-9" style={{
+        height: '150px', transform:"translateX(200px)"
       }} shadow="dark">
         <CardHeader>
         <Text size="large" weight="strong">
@@ -12,9 +12,6 @@ const Homecards = (props) =>{
         </Text>
         </CardHeader>
         <CardBody>
-             <div>
-              {props.description}
-              </div>
               <p>Due on {props.date}</p>
         </CardBody>
         <CardFooter>

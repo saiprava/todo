@@ -6,11 +6,14 @@ import '@innovaccer/design-system/css';
 import {Route,BrowserRouter,Switch} from 'react-router-dom';
 import DeletedTask from './Components/DeletedTask/Deletedtask';
 import Donetask from './Components/donetask/donetask';
+import Navigation from './Components/Navigation/Navigation';
 
 function App() {
   return (
     <BrowserRouter>
+    
     <Fragment className={App}>
+    <Navigation/>
       <Switch>
       <Route exact path="/" component={Home}/>
       <Route exact path="/deleted-task" component={DeletedTask}/>

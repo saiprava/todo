@@ -5,7 +5,8 @@ import {setTask,setTaskDeleted,setTaskCompleted} from '../../Redux/Task/Task.act
 import { DatePicker } from '@innovaccer/design-system';
 import Homecards from './homecards';
 import { Redirect } from 'react-router';
-
+import image from '../../lime-list-is-empty.png';
+import Axios from 'axios';
 
   
 const Home = (props) => {
@@ -15,13 +16,21 @@ const Home = (props) => {
     const [title,setTitle] = useState("");
     const [desc,setDesc] = useState("");
     const [date,setDate] = useState(null);
-    const [pendingtask,setPendintask] = useState([]);
+    const [pendingtask,setPendintask] = useState(null);
     const [deletedtask,setDeletedtask] = useState(false);
     const [completedtask,setCompletedTask] = useState(false);
 
     useEffect(()=> {
-      setPendintask(props.task);   
-    },[pendingtask,props.task])
+      const options = {
+        url : "https://jsonplaceholder.typicode.com/todos",
+        method: 'GET'
+      };
+      Axios(options).then((res) => {
+        console.log(res.data);
+        props.setTask(res.data);
+        setPendintask(res.data);
+      });
+    },[])
     console.log(pendingtask);
 
     const onDeleteHandler = (title) => {
@@ -41,27 +50,32 @@ const Home = (props) => {
         desc,
         date: datev
       };
-      props.setTask(task);
-      console.log(props.task);
+      
+      console.log(task);
+      let s=[...props.task,task];
+      setPendintask(s);
+      console.log(s);
+      props.setTask(pendingtask);
+
+      
     }
     console.log(props.task);
 
     return (
-      deletedtask?<Redirect to="/deleted-task"/>:
-      completedtask?<Redirect to="/completed-task"/>:
-        <div style={{width: "70%" , margin: "0 auto"}}>
-        <h1>
-            TO-DO Lists 
-        </h1>
-        <Button className="mt-7 mb-7" type="button" size="large" appearance="basic" onClick={() => setHidden(!(hidden))} >ADD TASK</Button>
-        <Button className="mt-7 mb-7 mr-7" type="button" size="large" appearance="basic" onClick={()=>setDeletedtask(!(deletedtask))} >View deleted tasks</Button>
-        <Button className="mt-7 mb-7 mr-7" type="button" size="large" appearance="basic" onClick={() => setCompletedTask(!(completedtask))}>View completed tasks</Button>
-        {
-            hidden ?
-
-            <Row>
-      <Column size="8">
-        <Card className="px-6 py-6" style={{padding: "20px"}}>
+        <div style={{width: "70%" , 
+        margin: "20px" , 
+        display:"flex", 
+        flexDirection: "row",
+        padding:"30px", 
+        textAlign:"center",
+        transform:"translateY(-100px) translateX(100px)"}}>
+        <div style={{width: "50%"}}>
+          <div style={{display: "flex", flexDirection:"column"}}>
+            <img src={image} style={{height:"400px" ,width:"450px"}}/>
+            <div style={{transform:"translateY(-80px) translate(50px)"}} >
+        <Row>
+      <Column size="10">
+        <Card className="px-4 py-6 mt-6" style={{padding: "20px"}}>
           <CardHeader style={{padding: "5px"}}>
             <Heading size="l">
               ADD YOUR TASK HERE!!
@@ -77,14 +91,16 @@ const Home = (props) => {
           </CardBody>
         </Card>
       </Column>
-    </Row> : null
-        }
-        {cards}
-        { <div>
+    </Row>
+    </div>
+      </div>
+        </div>
+            
+        <div style={{width: "50%"}}>
           {
-            (pendingtask.length>0) ?
+            (pendingtask) ?
             pendingtask.map(ta => {
-              {console.log(ta)}
+              
               return(
                 <Homecards title={ta.title} description={ta.desc} date={ta.date} onDeleted={onDeleteHandler} onCompleted={onCompleteHandler}/>
 
@@ -93,7 +109,7 @@ const Home = (props) => {
             :
             null
           }
-        </div> }
+        </div> 
        
         </div>
 
