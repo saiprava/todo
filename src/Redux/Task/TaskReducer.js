@@ -18,17 +18,20 @@ const TaskReducer = (state = INITIAL_STATE, action) => {
             let items= state.task.filter(a => a.title!==action.payload)
             let delitems = state.task.filter(a=> a.title===action.payload)
             console.log(items);
+            console.log(...state.taskDeleted);
             return{
+            ...state,
             task: items,
-            taskDeleted:delitems 
+            taskDeleted:[...state.taskDeleted,...delitems]
             }
         case TaskActions.SET_TASK_COMPLETED: 
         let item= state.task.filter(a => a.title!==action.payload)
         let compitems = state.task.filter(a=> a.title===action.payload)
         console.log(item);
         return{
+        ...state,
         task: item,
-        taskCompleted:compitems 
+        taskCompleted:[...state.taskCompleted,...compitems] 
         }
         default:
             return state;

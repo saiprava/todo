@@ -1,31 +1,22 @@
 import React from 'react';
-import {
-  Nav,
-  NavLink,
-  Bars,
-  NavMenu,
-  NavBtn,
-  NavBtnLink
-} from './NavbarElement';
+import {NavLink} from 'react-router-dom';
 
 const Navbar = () => {
   return (
-    <>
-      <Nav>
-        <NavLink to='/'>
+    <div style={{display: "flex", justifyContent:"flex-end"}}>
+      <NavLink to='/' style={{fontFamily:"'Lobster', cursive",padding:"25px",fontSize: "20px"}}>
           Home
         </NavLink>
-        <NavMenu>
+        
          
-          <NavLink to='/completed-task' activeStyle>
+         <NavLink to='/completed-task' style={{fontFamily:"'Lobster', cursive",padding:"25px",fontSize: "20px"}}>
             View completed tasks
           </NavLink>
-          <NavLink to='/deleted-task' activeStyle>
+          <NavLink to='/deleted-task' style={{fontFamily:"'Lobster', cursive",padding:"25px",fontSize: "20px"}}>
             View deleted tasks
           </NavLink>
-        </NavMenu>
-      </Nav>
-    </>
+          
+          </div>
   );
 };
 

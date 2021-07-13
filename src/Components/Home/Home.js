@@ -16,21 +16,22 @@ const Home = (props) => {
     const [title,setTitle] = useState("");
     const [desc,setDesc] = useState("");
     const [date,setDate] = useState(null);
-    const [pendingtask,setPendintask] = useState(null);
+    const [pendingtask,setPendintask] = useState(props.task);
     const [deletedtask,setDeletedtask] = useState(false);
     const [completedtask,setCompletedTask] = useState(false);
 
-    useEffect(()=> {
+    useEffect(() => {
       const options = {
-        url : "https://jsonplaceholder.typicode.com/todos",
-        method: 'GET'
+        url: "https://jsonplaceholder.typicode.com/todos",
+        method: "GET",
       };
+      if(!pendingtask){
       Axios(options).then((res) => {
-        console.log(res.data);
         props.setTask(res.data);
         setPendintask(res.data);
       });
-    },[])
+    }
+    }, []);
     console.log(pendingtask);
 
     const onDeleteHandler = (title) => {
@@ -43,22 +44,19 @@ const Home = (props) => {
       props.setTaskCompleted(title);
     }
 
-   const onClickHandler = () => {
-     const datev= new Date(date).toString();
+    const onClickHandler = () => {
+      const datev = new Date(date).toString();
       let task = {
         title,
         desc,
-        date: datev
+        date: datev,
       };
-      
-      console.log(task);
-      let s=[...props.task,task];
+  
+      let s = [task, ...props.task];
+      console.log(1111, s);
       setPendintask(s);
-      console.log(s);
-      props.setTask(pendingtask);
-
-      
-    }
+      props.setTask(s);
+    };
     console.log(props.task);
 
     return (
@@ -68,7 +66,8 @@ const Home = (props) => {
         flexDirection: "row",
         padding:"30px", 
         textAlign:"center",
-        transform:"translateY(-100px) translateX(100px)"}}>
+        transform:"translateY(-100px) translateX(100px)",
+        fontFamily: "'Lobster', cursive"}}>
         <div style={{width: "50%"}}>
           <div style={{display: "flex", flexDirection:"column"}}>
             <img src={image} style={{height:"400px" ,width:"450px"}}/>
@@ -98,11 +97,11 @@ const Home = (props) => {
             
         <div style={{width: "50%"}}>
           {
-            (pendingtask) ?
-            pendingtask.map(ta => {
+            (props.task) ?
+            props.task.map(ta => {
               
               return(
-                <Homecards title={ta.title} description={ta.desc} date={ta.date} onDeleted={onDeleteHandler} onCompleted={onCompleteHandler}/>
+                <Homecards title={ta.title} onDeleted={onDeleteHandler} onCompleted={onCompleteHandler}/>
 
               );
             })
